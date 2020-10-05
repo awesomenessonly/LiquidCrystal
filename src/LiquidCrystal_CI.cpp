@@ -40,6 +40,7 @@ void LiquidCrystal_CI::init(uint8_t rs) {
   _cols = 16;
   _row = 0;
   _rows = 1;
+  _autoscroll = false;
   _display = false;
   _cursor = false;
   _blink = false;
@@ -54,6 +55,7 @@ void LiquidCrystal_CI::begin(uint8_t cols, uint8_t lines, uint8_t dotsize) {
   _cols = cols;
   _row = 0;
   _rows = lines;
+  _autoscroll = false;
   _display = false;
   _cursor = false;
   _blink = false;
@@ -124,10 +126,16 @@ void LiquidCrystal_CI::leftToRight() { LiquidCrystal_Base::leftToRight(); }
 void LiquidCrystal_CI::rightToLeft() { LiquidCrystal_Base::rightToLeft(); }
 
 // This will 'right justify' text from the cursor
-void LiquidCrystal_CI::autoscroll() { LiquidCrystal_Base::autoscroll(); }
+void LiquidCrystal_CI::autoscroll() {
+  LiquidCrystal_Base::autoscroll();
+  _autoscroll = true;
+}
 
 // This will 'left justify' text from the cursor
-void LiquidCrystal_CI::noAutoscroll() { LiquidCrystal_Base::noAutoscroll(); }
+void LiquidCrystal_CI::noAutoscroll() {
+  LiquidCrystal_Base::noAutoscroll();
+  _autoscroll = false;
+}
 
 // Allows us to fill the first 8 CGRAM locations
 // with custom characters
