@@ -1,3 +1,4 @@
+// High-Level Tests: testing LiquidCrystal_CI
 
 #define LiquidCrystal_Test LiquidCrystal
 #include "Common.cpp"
@@ -15,7 +16,7 @@ unittest(getRows) {
 }
 
 // based on Autoscroll.ino example
-unittest(autoscrollHi) {
+unittest(autoscroll_high) {
   LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
   assertFalse(lcd.isAutoscroll());
   lcd.begin(16, 2);
@@ -70,7 +71,7 @@ unittest(autoscrollHi) {
   lcd.clear();
 }
 
-unittest(clearBuffer) {
+unittest(clear_high) {
   // create lcd object
   LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
   // get currently displayed lines
@@ -106,6 +107,105 @@ unittest(clearBuffer) {
   assertEqual(2, lines.size());
   assertEqual(0, lines.at(0).length());
   assertEqual(0, lines.at(1).length());
+}
+
+unittest(createChar_high) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  // TODO
+}
+
+unittest(write_high) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  // TODO
+}
+
+unittest(print_high) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  // TODO
+}
+
+unittest(setCursor_high) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+
+  // reset lcd to have two lines
+  lcd.begin(16, 2);
+
+  // verify cursor is at beginning
+  assertEqual(0, lcd.getCursorCol());
+  assertEqual(0, lcd.getCursorRow());
+
+  // set cursor to second line
+  lcd.setCursor(0, 1);
+  // verify cursor position
+  assertEqual(0, lcd.getCursorCol());
+  assertEqual(1, lcd.getCursorRow());
+
+  // set cursor to middle of first line
+  lcd.setCursor(4, 0);
+  // verify cursor position
+  assertEqual(4, lcd.getCursorCol());
+  assertEqual(0, lcd.getCursorRow());
+}
+
+unittest(home_high) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  // TODO
+}
+
+unittest(display_high) {
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+
+  bool isDisplay = lcd.isDisplay();
+
+  // default
+  assertEqual(0, isDisplay);
+
+  // test is display on
+  lcd.display();
+  isDisplay = lcd.isDisplay();
+  assertEqual(1, isDisplay);
+
+  // test is display off
+  lcd.noDisplay();
+  isDisplay = lcd.isDisplay();
+  assertEqual(0, isDisplay);
+}
+
+unittest(blink_high) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+
+  bool blinking = lcd.isBlink();
+
+  // check default - noBlink
+  assertEqual(0, blinking);
+
+  // check blink function
+  lcd.blink();
+  blinking = lcd.isBlink();
+  assertEqual(1, blinking);
+
+  // check noBlink function
+  lcd.noBlink();
+  blinking = lcd.isBlink();
+  assertEqual(0, blinking);
+}
+
+unittest(cursor_high) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  // TODO
+}
+
+unittest(noCursor_high) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  // TODO
 }
 
 unittest_main()
