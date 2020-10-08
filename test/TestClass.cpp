@@ -57,8 +57,8 @@ unittest(autoscroll_high) {
 
     // compare expected to actual
     lines = lcd.getLines();
-    // assertEqual(16, lines.at(1).length());
-    // assertEqual(expected, lines.at(1));
+    assertEqual(16, lines.at(1).length());
+    assertEqual(expected, lines.at(1));
 
     delay(500);
   }
