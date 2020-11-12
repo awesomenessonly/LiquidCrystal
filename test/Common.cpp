@@ -537,7 +537,7 @@ unittest(write) {
                        624, 576, 608, 656, 608, 736};
   LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
   lcd.begin(16, 2);
-  BitCollector pinValues(true); // test the next line
+  BitCollector pinValues(false); // test the next line
   lcd.write('A');
   lcd.write('u');
   lcd.write('s');
