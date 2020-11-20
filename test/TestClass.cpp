@@ -113,7 +113,8 @@ unittest(createChar_high) {
   LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
 
   // create some chars
-  byte smiley[8] = {B00000, B10001, B00000, B00000, B10001, B01110, B00000};
+  byte smiley[8] = {B00000, B10001, B00000, B00000,
+                    B10001, B01110, B00000, B00000};
   byte spaceship[8] = {B00000, B00100, B01110, B01110,
                        B01110, B01010, B00000, B00000};
   lcd.createChar(0, smiley);
@@ -165,7 +166,16 @@ unittest(write_high) {
 unittest(print_high) {
   // create lcd object
   LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
-  // TODO
+  lcd.begin(16, 2);
+  lcd.print(F("ABCD"));
+  lcd.setCursor(13, 1);
+  lcd.print(F("XYZ"));
+  std::vector<std::string> lines = lcd.getLines();
+  assertEqual(2, lines.size());
+  assertEqual(4, lines.at(0).length());
+  assertEqual("ABCD", lines.at(0));
+  assertEqual(16, lines.at(1).length());
+  assertEqual("             XYZ", lines.at(1));
 }
 
 unittest(setCursor_high) {
@@ -347,6 +357,20 @@ unittest(printLines_high) {
   assertEqual("100", lines.at(0));
   assertEqual(0, lines.at(1).length());
   lcd.clear();
+}
+
+unittest(createChar_and_print) {
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  lcd.begin(16, 2);
+  uint8_t OL1[8] = {0b00000, 0b00000, 0b00001, 0b00011,
+                    0b00011, 0b00111, 0b00111, 0b00110};
+  lcd.createChar(0, OL1);
+  lcd.clear();
+  lcd.print(F("ABC"));
+  std::vector<std::string> lines = lcd.getLines();
+  assertEqual(2, lines.size());
+  assertEqual(3, lines.at(0).length());
+  assertEqual(0, lines.at(1).length());
 }
 
 unittest_main()

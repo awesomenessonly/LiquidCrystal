@@ -227,7 +227,8 @@ unittest(noCursor) {
 unittest(createChar) {
   vector<int> expected{64,  0,   512, 512, 528, 528, 512, 512, 512,
                        512, 528, 528, 512, 736, 512, 512, 512, 512};
-  byte smiley[8] = {B00000, B10001, B00000, B00000, B10001, B01110, B00000};
+  byte smiley[8] = {B00000, B10001, B00000, B00000,
+                    B10001, B01110, B00000, B00000};
   LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
   BitCollector pinValues(false); // test the next line
   lcd.createChar(0, smiley);

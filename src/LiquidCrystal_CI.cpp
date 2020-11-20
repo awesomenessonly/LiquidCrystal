@@ -44,6 +44,7 @@ void LiquidCrystal_CI::init(uint8_t rs) {
   _display = false;
   _cursor = false;
   _blink = false;
+  _isInCreateChar = false;
   _lines.clear();
   _lines.resize(_rows);
   for (int character = 0; character < 8; character++) {
@@ -64,6 +65,7 @@ void LiquidCrystal_CI::begin(uint8_t cols, uint8_t lines, uint8_t dotsize) {
   _display = false;
   _cursor = false;
   _blink = false;
+  _isInCreateChar = false;
   _lines.clear();
   _lines.resize(_rows);
 }
@@ -145,7 +147,9 @@ void LiquidCrystal_CI::noAutoscroll() {
 // Allows us to fill the first 8 CGRAM locations
 // with custom characters
 void LiquidCrystal_CI::createChar(uint8_t location, uint8_t charmap[]) {
+  _isInCreateChar = true;
   LiquidCrystal_Base::createChar(location, charmap);
+  _isInCreateChar = false;
   // fill the customChars with the charmap
   for (int line = 0; line < 8; line++) {
     _customChars[location][line] = charmap[line];
@@ -153,24 +157,25 @@ void LiquidCrystal_CI::createChar(uint8_t location, uint8_t charmap[]) {
 }
 
 inline size_t LiquidCrystal_CI::write(uint8_t value) {
-
-  std::string line = _lines.at(_row);
-  int end = _autoscroll ? (_col - 1) : _col;
-  while (line.length() <= end) {
-    line += ' ';
-  }
-
-  if (_autoscroll) {
-    for (int i = 0; i < (_col - 1); i++) {
-      line.at(i) = line.at(i + 1);
+  if (!_isInCreateChar) {
+    std::string line = _lines.at(_row);
+    int end = _autoscroll ? (_col - 1) : _col;
+    while (line.length() <= end) {
+      line += ' ';
     }
-    --_col;
+
+    if (_autoscroll) {
+      for (int i = 0; i < (_col - 1); i++) {
+        line.at(i) = line.at(i + 1);
+      }
+      --_col;
+    }
+
+    line.at(_col) = value;
+    ++_col;
+
+    _lines.at(_row) = line;
   }
-
-  line.at(_col) = value;
-  ++_col;
-
-  _lines.at(_row) = line;
   return LiquidCrystal_Base::write(value);
 }
 
