@@ -1,5 +1,5 @@
 #include "LiquidCrystal_CI.h"
-#ifdef ARDUINO_CI
+#ifdef MOCK_PINS_COUNT
 
 #include <inttypes.h>
 #include <stdio.h>

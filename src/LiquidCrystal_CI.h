@@ -1,6 +1,6 @@
 #pragma once
 #include <LiquidCrystal.h>
-#ifdef ARDUINO_CI
+#ifdef MOCK_PINS_COUNT
 
 #include <string>
 #include <vector>

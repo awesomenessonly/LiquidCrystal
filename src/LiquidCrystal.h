@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#ifdef ARDUINO_CI
+#ifdef MOCK_PINS_COUNT
 #define LiquidCrystal_CI LiquidCrystal
 #include <WString.h>
 #else
@@ -91,7 +91,7 @@ public:
   void setCursor(uint8_t, uint8_t);
   virtual size_t write(uint8_t);
   void command(uint8_t);
-#ifdef ARDUINO_CI
+#ifdef MOCK_PINS_COUNT
   virtual String className() const { return "LiquidCrystal_Base"; }
 #endif
 
